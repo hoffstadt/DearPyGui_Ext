@@ -1,17 +1,20 @@
 import setuptools
-
+from codecs import open
+from os import path
 
 def readme():
     try:
-        with open('docs/README.md', encoding='utf-8') as f:
+        with open('./docs/README.md', encoding='utf-8') as f:
             return f.read()
     except IOError:
-        return ''
+        return 'Not Found'
 
 
 setuptools.setup(
     name="dearpygui_ext",
-    version="0.2.1",
+    version="0.2.2",
+    license='MIT',
+    python_requires='>=3.6',
     author="Jonathan Hoffstadt and Preston Cothren",
     author_email="jonathanhoffstadt@yahoo.com",
     description='Dear PyGui Extensions: Extensions for Dear PyGui',
