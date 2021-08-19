@@ -1,8 +1,7 @@
 name: Deploy Package
 
 on:
-  push: {}
-  pull_request: {}
+  push: master
     
 jobs:
 
