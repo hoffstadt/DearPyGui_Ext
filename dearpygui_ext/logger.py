@@ -16,7 +16,7 @@ class mvLogger:
         self.flush_count = 1000
 
         with dpg.group(horizontal=True, parent=self.window_id):
-            dpg.add_checkbox(label="Auto-scroll", default_value=True, callback=lambda sender:self.auto_scroll(dpg.get_value(sender)))
+            dpg.add_checkbox(label="Auto-scroll", default_value=True, callback=lambda sender: self.auto_scroll(dpg.get_value(sender)))
             dpg.add_button(label="Clear", callback=lambda: dpg.delete_item(self.filter_id, children_only=True))
 
         dpg.add_input_text(label="Filter", callback=lambda sender: dpg.set_value(self.filter_id, dpg.get_value(sender)), 
