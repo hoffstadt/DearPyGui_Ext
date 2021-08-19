@@ -1,4 +1,4 @@
-# 0.2.x CHANGELOG
+# 0.8.x CHANGELOG
 
 This document holds the user-facing changelog that we also use in release notes.
 We generally fold multiple commits pertaining to the same topic as a single entry.
@@ -20,5 +20,5 @@ We generally fold multiple commits pertaining to the same topic as a single entr
 - Read the `Breaking Changes` section (here in the changelog).
 - Please report any issue!
 
-## VERSION 0.2.x
+## VERSION 0.8.x
 

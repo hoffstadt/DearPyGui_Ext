@@ -4,7 +4,7 @@ from os import path
 
 def readme():
     try:
-        with open('./docs/README.md', encoding='utf-8') as f:
+        with open('README.md', encoding='utf-8') as f:
             return f.read()
     except IOError:
         return 'Not Found'
@@ -12,7 +12,7 @@ def readme():
 
 setuptools.setup(
     name="dearpygui_ext",
-    version="0.2.2",
+    version="0.8.0",
     license='MIT',
     python_requires='>=3.6',
     author="Jonathan Hoffstadt and Preston Cothren",
@@ -39,6 +39,6 @@ setuptools.setup(
         'Topic :: Software Development :: Libraries :: Python Modules',
     ],
     package_data={  # Optional
-        'dearpygui_ext': ['docs/README.md']
+        'dearpygui_ext': ['README.md']
     }
 )
