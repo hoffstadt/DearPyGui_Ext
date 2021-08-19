@@ -1,0 +1,39 @@
+name: Deploy Package
+
+on:
+  push: {}
+  pull_request: {}
+    
+jobs:
+
+  build-windows:
+    
+    runs-on: windows-2019
+    if: "! contains(github.event.head_commit.message, '[skip ci]')"
+    strategy:
+      matrix:
+        python-version: [ 3.9 ]
+
+    steps:
+
+    - uses: actions/checkout@v2
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip setuptools wheel build
+        pip install dearpygui
+
+    - name: Build package
+      run: |
+        python -m build
+
+    - name: Deploy package
+      uses: pypa/gh-action-pypi-publish@27b31702a0e7fc50959f5ad993c78deac1bdfc29
+      with:
+        user: __token__
+        password: ${{ secrets.PYPI_API_TOKEN }}

@@ -1,0 +1,8 @@
+.idea/
+.vs/
+out/
+venv/
+dist/
+dearpygui_ext.egg-info/
+Output/
+.DS_Store
