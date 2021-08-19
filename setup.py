@@ -11,7 +11,7 @@ def readme():
 
 setuptools.setup(
     name="dearpygui_ext",
-    version="0.1.1",
+    version="0.2.0",
     author="Jonathan Hoffstadt and Preston Cothren",
     author_email="jonathanhoffstadt@yahoo.com",
     description='Dear PyGui Extensions: Extensions for Dear PyGui',
