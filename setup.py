@@ -11,15 +11,15 @@ def readme():
 
 setuptools.setup(
     name="dearpygui_ext",
-    version="0.2.0",
+    version="0.2.1",
     author="Jonathan Hoffstadt and Preston Cothren",
     author_email="jonathanhoffstadt@yahoo.com",
     description='Dear PyGui Extensions: Extensions for Dear PyGui',
     long_description=readme(),
     long_description_content_type="text/markdown",
-    url='https://github.com/hoffstadt/DearPyGui',          # Optional
+    url='https://github.com/hoffstadt/DearPyGui_Ext',          # Optional
     packages=['dearpygui_ext'],
-    classifiers=(
+    classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Education',
         'Intended Audience :: Developers',
@@ -34,5 +34,8 @@ setuptools.setup(
         'Programming Language :: Python :: 3.9',
         'Topic :: Software Development :: User Interfaces',
         'Topic :: Software Development :: Libraries :: Python Modules',
-    ),
+    ],
+    package_data={  # Optional
+        'dearpygui_ext': ['docs/README.md']
+    }
 )
