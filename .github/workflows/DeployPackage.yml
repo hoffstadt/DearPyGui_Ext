@@ -34,5 +34,5 @@ jobs:
 
     - name: Deploy package
       run: |
-        python -m pip twine --upgrade
+        python -m pip install twine
         python -m twine upload -u __token__ -p ${{ secrets.PYPI_API_TOKEN }} --skip-existing
