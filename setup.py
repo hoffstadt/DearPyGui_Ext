@@ -3,7 +3,7 @@ import setuptools
 
 def readme():
     try:
-        with open('docs/README.md') as f:
+        with open('docs/README.md', encoding='utf-8') as f:
             return f.read()
     except IOError:
         return ''
