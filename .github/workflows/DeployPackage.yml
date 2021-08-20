@@ -1,7 +1,9 @@
 name: Deploy Package
 
 on:
+
   workflow_dispatch:
+
       inputs:
 
         version:
@@ -32,6 +34,13 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
+    - name: Echo Debug
+      shell: cmd
+      run: |
+        cd %GITHUB_WORKSPACE%
+        echo %INPUT_VERSION%
+        echo ${{ github.event.inputs.version }}
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip setuptools wheel build dearpygui
@@ -41,7 +50,7 @@ jobs:
       run: |
         cd %GITHUB_WORKSPACE%
         echo %INPUT_VERSION% > version_number.txt
-        echo ${{ github.events.input.version }} > version_number1.txt
+        echo ${{ github.event.inputs.version }} > version_number1.txt
         python -m build
 
     - name: Deploy package
