@@ -62,14 +62,14 @@ jobs:
 
     - name: PyPi Deployment
       shell: cmd
-      if: "contains(github.event.inputs.deploy, 'true')"
+      if: ${{contains(github.event.inputs.deploy, 'true') && github.ref == 'refs/heads/master'}}
       run: |
         python -m pip install twine
         python -m twine upload dist/* -u __token__ -p ${{ secrets.PYPI_API_TOKEN }} --skip-existing
 
     - name: Test PyPi Deployment
       shell: cmd
-      if: "contains(github.event.inputs.deploytest, 'true')"
+      if: ${{contains(github.event.inputs.deploytest, 'true') && github.ref == 'refs/heads/master'}}
       run: |
         python -m pip install twine
         python -m twine upload --repository testpypi dist/* -u __token__ -p ${{ secrets.TEST_PYPI_API_TOKEN }} --skip-existing
