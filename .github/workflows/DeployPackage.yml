@@ -52,6 +52,7 @@ jobs:
       with:
         name: dearpygui_ext wheel
         path: |
+          ${{ github.workspace }}/version_number.txt
           ${{ github.workspace }}/dist/*.whl
           ${{ github.workspace }}/dist/*.tar.gz
         retention-days: 1
