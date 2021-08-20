@@ -4,7 +4,7 @@ from codecs import open
 
 def version_number():
     try:
-        with open('version_number.txt') as f:
+        with open('version_number.txt', encoding='utf-8') as f:
             return f.readline()
 
     except IOError:
