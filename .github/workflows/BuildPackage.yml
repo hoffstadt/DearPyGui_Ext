@@ -1,4 +1,4 @@
-name: Deploy Package
+name: Build
 
 on:
 
@@ -12,13 +12,18 @@ on:
           default: '0.8.0'
 
         deploy:
-          description: 'Deploy (true will deploy)'
+          description: 'Deploy (true will deploy to pypi)'
+          required: true
+          default: 'false'
+
+        deploytest:
+          description: 'Deploy (true will deploy to test pypi)'
           required: true
           default: 'false'
 
 jobs:
 
-  deploy-package:
+  build-package:
     
     runs-on: windows-2019
     strategy:
@@ -34,13 +39,6 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
-    - name: Echo Debug
-      shell: cmd
-      run: |
-        cd %GITHUB_WORKSPACE%
-        echo %INPUT_VERSION%
-        echo ${{ github.event.inputs.version }}
-
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip setuptools wheel build dearpygui
@@ -52,13 +50,6 @@ jobs:
         echo ${{ github.event.inputs.version }} > version_number.txt
         python -m build
 
-    - name: Deploy package
-      shell: cmd
-      if: "contains(github.event.inputs.deploy, 'true')"
-      run: |
-        python -m pip install twine
-        python -m twine upload dist/* -u __token__ -p ${{ secrets.PYPI_API_TOKEN }} --skip-existing
-
     - uses: actions/upload-artifact@v2
       with:
         name: dearpygui_ext wheel
@@ -68,3 +59,17 @@ jobs:
           ${{ github.workspace }}/dist/*.tar.gz
         retention-days: 1
         if-no-files-found: error
+
+    - name: PyPi Deployment
+      shell: cmd
+      if: "contains(github.event.inputs.deploy, 'true')"
+      run: |
+        python -m pip install twine
+        python -m twine upload dist/* -u __token__ -p ${{ secrets.PYPI_API_TOKEN }} --skip-existing
+
+    - name: Test PyPi Deployment
+      shell: cmd
+      if: "contains(github.event.inputs.deploytest, 'true')"
+      run: |
+        python -m pip install twine
+        python -m twine upload --repository testpypi dist/* -u __token__ -p ${{ secrets.TEST_PYPI_API_TOKEN }} --skip-existing
