@@ -8,7 +8,7 @@ def version_number():
             return f.readline()
 
     except IOError:
-        return '0.8.0'
+        return '0.0.1'
 
 
 def readme():
