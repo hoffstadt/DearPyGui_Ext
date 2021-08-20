@@ -1,6 +1,15 @@
 import setuptools
 from codecs import open
-from os import path
+
+
+def version_number():
+    try:
+        with open('version_number.txt') as f:
+            return f.readline()
+
+    except IOError:
+        return '0.8.0'
+
 
 def readme():
     try:
@@ -12,7 +21,7 @@ def readme():
 
 setuptools.setup(
     name="dearpygui_ext",
-    version="0.8.0",
+    version=version_number(),
     license='MIT',
     python_requires='>=3.6',
     author="Jonathan Hoffstadt and Preston Cothren",

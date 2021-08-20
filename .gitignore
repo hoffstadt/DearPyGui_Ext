@@ -6,3 +6,4 @@ dist/
 dearpygui_ext.egg-info/
 Output/
 .DS_Store
+version_number.txt
