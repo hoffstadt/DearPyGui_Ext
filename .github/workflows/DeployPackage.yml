@@ -49,8 +49,7 @@ jobs:
       shell: cmd
       run: |
         cd %GITHUB_WORKSPACE%
-        echo %INPUT_VERSION% > version_number.txt
-        echo ${{ github.event.inputs.version }} > version_number1.txt
+        echo ${{ github.event.inputs.version }} > version_number.txt
         python -m build
 
     - name: Deploy package
@@ -65,7 +64,6 @@ jobs:
         name: dearpygui_ext wheel
         path: |
           ${{ github.workspace }}/version_number.txt
-          ${{ github.workspace }}/version_number1.txt
           ${{ github.workspace }}/dist/*.whl
           ${{ github.workspace }}/dist/*.tar.gz
         retention-days: 1
