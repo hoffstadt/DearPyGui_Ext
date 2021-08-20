@@ -1,8 +1,13 @@
 name: Deploy Package
 
 on:
-  push: master
-    
+  workflow_dispatch:
+      inputs:
+        release version:
+          description: 'DPG Version'
+          required: false
+          default: '0.8.0'
+
 jobs:
 
   deploy-package:
@@ -29,6 +34,7 @@ jobs:
 
     - name: Build package
       run: |
+        echo %INPUT_RELEASE_VERSION% > version_number.txt
         python -m build
 
     - name: Deploy package
