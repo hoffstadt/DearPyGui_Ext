@@ -11,6 +11,7 @@
 ![Python Version](https://img.shields.io/pypi/pyversions/dearpygui-ext)
 [![PYPI](https://img.shields.io/pypi/v/dearpygui-ext)](https://pypi.org/project/dearpygui-ext/)
 [![Build](https://github.com/hoffstadt/DearPyGui_Ext/actions/workflows/BuildPackage.yml/badge.svg)](https://github.com/hoffstadt/DearPyGui_Ext/actions/workflows/BuildPackage.yml)
+[![Documentation Status](https://readthedocs.org/projects/dearpygui-ext/badge/?version=latest)](https://dearpygui-ext.readthedocs.io/en/latest/?badge=latest)
 
 **Dear PyGui Extensions** is a collection of useful tools, abstractions, and simplification layers built with/for _Dear PyGui_ users.
 
