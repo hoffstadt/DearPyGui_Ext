@@ -10,7 +10,7 @@ Welcome to DearPyGui_Ext's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-
+   introduction.rst
 
 Indices and tables
 ==================
