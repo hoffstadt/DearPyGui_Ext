@@ -1,5 +1,6 @@
 import setuptools
 from codecs import open
+import os
 
 
 wip_version = "0.9.1"
