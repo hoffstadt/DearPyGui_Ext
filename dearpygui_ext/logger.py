@@ -24,22 +24,28 @@ class mvLogger:
         self.filter_id = dpg.add_filter_set(parent=self.child_id)
 
         with dpg.theme() as self.trace_theme:
-            dpg.add_theme_color(dpg.mvThemeCol_Text, (0, 255, 0, 255))
+            with dpg.theme_component(0):
+                dpg.add_theme_color(dpg.mvThemeCol_Text, (0, 255, 0, 255))
 
         with dpg.theme() as self.debug_theme:
-            dpg.add_theme_color(dpg.mvThemeCol_Text, (64, 128, 255, 255))
+            with dpg.theme_component(0):
+                dpg.add_theme_color(dpg.mvThemeCol_Text, (64, 128, 255, 255))
 
         with dpg.theme() as self.info_theme:
-            dpg.add_theme_color(dpg.mvThemeCol_Text, (255, 255, 255, 255))
+            with dpg.theme_component(0):
+                dpg.add_theme_color(dpg.mvThemeCol_Text, (255, 255, 255, 255))
 
         with dpg.theme() as self.warning_theme:
-            dpg.add_theme_color(dpg.mvThemeCol_Text, (255, 255, 0, 255))
+            with dpg.theme_component(0):
+                dpg.add_theme_color(dpg.mvThemeCol_Text, (255, 255, 0, 255))
 
         with dpg.theme() as self.error_theme:
-            dpg.add_theme_color(dpg.mvThemeCol_Text, (255, 0, 0, 255))
+            with dpg.theme_component(0):
+                dpg.add_theme_color(dpg.mvThemeCol_Text, (255, 0, 0, 255))
 
         with dpg.theme() as self.critical_theme:
-            dpg.add_theme_color(dpg.mvThemeCol_Text, (255, 0, 0, 255))
+            with dpg.theme_component(0):
+                dpg.add_theme_color(dpg.mvThemeCol_Text, (255, 0, 0, 255))
 
     def auto_scroll(self, value):
         self._auto_scroll = value
