@@ -2,13 +2,19 @@ import setuptools
 from codecs import open
 
 
+wip_version = "0.9.1"
+
 def version_number():
+    """This function reads the version number which is populated by github actions"""
+
+    if os.environ.get('READTHEDOCS') == 'True':
+        return wip_version
     try:
         with open('version_number.txt', encoding='utf-8') as f:
             return f.readline().rstrip()
 
     except IOError:
-        return '0.0.1'
+        return wip_version
 
 
 def readme():
