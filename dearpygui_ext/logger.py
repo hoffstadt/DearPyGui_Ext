@@ -20,7 +20,7 @@ class mvLogger:
 
         dpg.add_input_text(label="Filter", callback=lambda sender: dpg.set_value(self.filter_id, dpg.get_value(sender)), 
                     parent=self.window_id)
-        self.child_id = dpg.add_child(parent=self.window_id, autosize_x=True, autosize_y=True)
+        self.child_id = dpg.add_child_window(parent=self.window_id, autosize_x=True, autosize_y=True)
         self.filter_id = dpg.add_filter_set(parent=self.child_id)
 
         with dpg.theme() as self.trace_theme:
