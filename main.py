@@ -1,35 +1,31 @@
 import dearpygui.dearpygui as dpg
-import dearpygui.demo as demo
-import dearpygui_ext.themes as themes
-from dearpygui_ext.datagrid import mvDataGrid
-import warnings
+from dearpygui_ext.simple_table import mvSimpleTable
+from dearpygui_ext.logger import mvLogger
 
-warnings.simplefilter('always', DeprecationWarning)
+dpg.create_context()
+dpg.create_viewport()
+dpg.setup_dearpygui()
 
-dpg.enable_docking()
-
-with dpg.font_registry():
-    with dpg.font("../../Resources/NotoSerifCJKjp-Medium.otf", 20):
-        dpg.add_font_range_hint(dpg.mvFontRangeHint_Default)
-    dpg.bind_font(dpg.last_container())
-
-demo.show_demo()
 
 datagrid_data = []
-rows = 1000
-columns = 10
+rows = 100
+columns = 4
 for i in range(rows):
     new_row = []
     for j in range(columns):
-        new_row.append(j)
+        new_row.append(i)
     datagrid_data.append(new_row)
 
-datagrid = mvDataGrid(columns, datagrid_data)
+dpg.show_item_registry()
+
+datagrid = mvSimpleTable(columns, datagrid_data)
 
 with dpg.window(label="tutorial", width=500, height=500):
+    dpg.add_button(label="clear", callback=lambda: datagrid.clear())
+    dpg.add_button(label="add_row", callback=lambda: datagrid.add_row([58, 47, 6]))
+    dpg.add_button(label="delete_row_3", callback=lambda: datagrid.delete_row(3))
     datagrid.submit()
 
-dpg.create_viewport()
-dpg.setup_dearpygui()
 dpg.show_viewport()
 dpg.start_dearpygui()
+dpg.destroy_context()
