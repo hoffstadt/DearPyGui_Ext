@@ -1,9 +1,13 @@
+import logging
+import queue
+from logging.handlers import QueueHandler
+
 import dearpygui.dearpygui as dpg
 
 class mvLogger:
 
     def __init__(self, parent=None):
-        
+
         self.log_level = 0
         self._auto_scroll = True
         self.filter_id = None
@@ -18,7 +22,7 @@ class mvLogger:
             dpg.add_checkbox(label="Auto-scroll", default_value=True, callback=lambda sender:self.auto_scroll(dpg.get_value(sender)))
             dpg.add_button(label="Clear", callback=lambda: dpg.delete_item(self.filter_id, children_only=True))
 
-        dpg.add_input_text(label="Filter", callback=lambda sender: dpg.set_value(self.filter_id, dpg.get_value(sender)), 
+        dpg.add_input_text(label="Filter", callback=lambda sender: dpg.set_value(self.filter_id, dpg.get_value(sender)),
                     parent=self.window_id)
         self.child_id = dpg.add_child_window(parent=self.window_id, autosize_x=True, autosize_y=True)
         self.filter_id = dpg.add_filter_set(parent=self.child_id)
@@ -41,7 +45,7 @@ class mvLogger:
 
         with dpg.theme() as self.error_theme:
             with dpg.theme_component(0):
-                dpg.add_theme_color(dpg.mvThemeCol_Text, (255, 0, 0, 255))
+                dpg.add_theme_color(dpg.mvThemeCol_Text, (220, 128, 64, 255))
 
         with dpg.theme() as self.critical_theme:
             with dpg.theme_component(0):
@@ -52,7 +56,7 @@ class mvLogger:
 
     def _log(self, message, level):
 
-        if level < self.log_level:
+        if level <= self.log_level:
             return
 
         self.count+=1
@@ -65,18 +69,18 @@ class mvLogger:
         if level == 0:
             message = "[TRACE]\t\t" + message
             theme = self.trace_theme
-        elif level == 1:
+        elif level == 10:
             message = "[DEBUG]\t\t" + message
             theme = self.debug_theme
-        elif level == 2:
+        elif level == 20:
             message = "[INFO]\t\t" + message
-        elif level == 3:
+        elif level == 30:
             message = "[WARNING]\t\t" + message
             theme = self.warning_theme
-        elif level == 4:
+        elif level == 40:
             message = "[ERROR]\t\t" + message
             theme = self.error_theme
-        elif level == 5:
+        elif level == 50:
             message = "[CRITICAL]\t\t" + message
             theme = self.critical_theme
 
@@ -90,20 +94,63 @@ class mvLogger:
         self._log(message, 0)
 
     def log_debug(self, message):
-        self._log(message, 1)
+        self._log(message, 10)
 
     def log_info(self, message):
-        self._log(message, 2)
+        self._log(message, 20)
 
     def log_warning(self, message):
-        self._log(message, 3)
+        self._log(message, 30)
 
     def log_error(self, message):
-        self._log(message, 4)
+        self._log(message, 40)
 
     def log_critical(self, message):
-        self._log(message, 5)
+        self._log(message, 50)
 
     def clear_log(self):
         dpg.delete_item(self.filter_id, children_only=True)
         self.count = 0
+
+
+if __name__ == "__main__":
+
+    logger = logging.getLogger(__name__)
+    logger.setLevel(10)
+
+    log_queue = queue.Queue(1000)
+    queue_handler = QueueHandler(log_queue)
+    queue_handler.setLevel(logging.NOTSET)
+    logger.addHandler(queue_handler)
+
+    console_handler = logging.StreamHandler()
+    formatter = logging.Formatter('%(threadName)s: %(message)s')
+    console_handler.setFormatter(formatter)
+
+    dpg.create_context()
+
+    dpg.create_viewport()
+
+
+    logger.debug("We can log to a debug level.")
+    logger.info("We can log to an info level.")
+    logger.warning("We can log to a warning level.")
+    logger.error("We can log to a error level.")
+    logger.critical("We can log to a critical level.")
+
+    dpglogger = mvLogger()
+
+    dpg.setup_dearpygui()
+
+    dpg.show_viewport()
+    def callback_log():
+        """Pass messages from logging queue to dpg logger."""
+        if not log_queue.empty():
+            log_copy = log_queue.get()
+            dpglogger._log(log_copy.message, log_copy.levelno)
+
+    while dpg.is_dearpygui_running():
+        callback_log()
+        dpg.render_dearpygui_frame()
+
+    dpg.destroy_context()
