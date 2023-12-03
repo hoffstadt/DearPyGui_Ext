@@ -5,10 +5,10 @@ from logging.handlers import QueueHandler
 import dearpygui.dearpygui as dpg
 
 class mvLogger:
+    """Class to show log mesages raised by the logging module."""
 
     def __init__(self, parent=None):
 
-        self.log_level = 0
         self._auto_scroll = True
         self.filter_id = None
         if parent:
@@ -55,58 +55,21 @@ class mvLogger:
         self._auto_scroll = value
 
     def _log(self, message, level):
-
-        if level <= self.log_level:
-            return
+        """Take in a log message to show in DPG."""
 
         self.count+=1
 
         if self.count > self.flush_count:
             self.clear_log()
 
-        theme = self.info_theme
-
-        if level == 0:
-            message = "[TRACE]\t\t" + message
-            theme = self.trace_theme
-        elif level == 10:
-            message = "[DEBUG]\t\t" + message
-            theme = self.debug_theme
-        elif level == 20:
-            message = "[INFO]\t\t" + message
-        elif level == 30:
-            message = "[WARNING]\t\t" + message
-            theme = self.warning_theme
-        elif level == 40:
-            message = "[ERROR]\t\t" + message
-            theme = self.error_theme
-        elif level == 50:
-            message = "[CRITICAL]\t\t" + message
-            theme = self.critical_theme
+        levelname = logging._levelToName[level].lower()
+        logtheme = getattr(self, f'{levelname}_theme')
 
         new_log = dpg.add_text(message, parent=self.filter_id, filter_key=message)
-        dpg.bind_item_theme(new_log, theme)
+        dpg.bind_item_theme(new_log, logtheme)
         if self._auto_scroll:
             scroll_max = dpg.get_y_scroll_max(self.child_id)
             dpg.set_y_scroll(self.child_id, -1.0)
-
-    def log(self, message):
-        self._log(message, 0)
-
-    def log_debug(self, message):
-        self._log(message, 10)
-
-    def log_info(self, message):
-        self._log(message, 20)
-
-    def log_warning(self, message):
-        self._log(message, 30)
-
-    def log_error(self, message):
-        self._log(message, 40)
-
-    def log_critical(self, message):
-        self._log(message, 50)
 
     def clear_log(self):
         dpg.delete_item(self.filter_id, children_only=True)
@@ -116,16 +79,21 @@ class mvLogger:
 if __name__ == "__main__":
 
     logger = logging.getLogger(__name__)
-    logger.setLevel(10)
+    logger.setLevel(logging.DEBUG)
 
     log_queue = queue.Queue(1000)
     queue_handler = QueueHandler(log_queue)
+    queue_formatter = logging.Formatter('%(levelname)8s: %(message)s')
+    queue_handler.setFormatter(queue_formatter)
     queue_handler.setLevel(logging.NOTSET)
-    logger.addHandler(queue_handler)
 
     console_handler = logging.StreamHandler()
-    formatter = logging.Formatter('%(threadName)s: %(message)s')
-    console_handler.setFormatter(formatter)
+    console_formatter = logging.Formatter('%(levelname)8s: %(message)s')
+    console_handler.setFormatter(console_formatter)
+    console_handler.setLevel(logging.WARNING)
+
+    logger.addHandler(queue_handler)
+    logger.addHandler(console_handler)
 
     dpg.create_context()
 
