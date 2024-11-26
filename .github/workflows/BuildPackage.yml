@@ -9,7 +9,7 @@ on:
         version:
           description: 'Dear PyGui Extension Version'
           required: true
-          default: '0.8.0'
+          default: '2.0.0'
 
         deploy:
           description: 'Deploy (true will deploy to pypi)'
@@ -32,10 +32,10 @@ jobs:
 
     steps:
 
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
 
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
 
@@ -50,7 +50,7 @@ jobs:
         echo ${{ github.event.inputs.version }} > version_number.txt
         python -m build
 
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v4
       with:
         name: dearpygui_ext wheel
         path: |

@@ -3,7 +3,7 @@ from codecs import open
 import os
 
 
-wip_version = "0.9.5"
+wip_version = "2.0.0"
 
 def version_number():
     """This function reads the version number which is populated by github actions"""
