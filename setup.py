@@ -3,7 +3,7 @@ from codecs import open
 import os
 
 
-wip_version = "2.0.0"
+wip_version = "2.1.1"
 
 def version_number():
     """This function reads the version number which is populated by github actions"""
@@ -30,7 +30,7 @@ setuptools.setup(
     name="dearpygui_ext",
     version=version_number(),
     license='MIT',
-    python_requires='>=3.6',
+    python_requires='>=3.8',
     author="Jonathan Hoffstadt and Preston Cothren",
     author_email="jonathanhoffstadt@yahoo.com",
     description='Dear PyGui Extensions: Extensions for Dear PyGui',
